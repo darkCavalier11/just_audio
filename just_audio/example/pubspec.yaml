@@ -16,6 +16,7 @@ dependencies:
   # just_audio_libwinmedia: ^0.0.4
   just_audio:
     path: ../
+  youtube_explode_dart: ^1.12.1
 
 # Uncomment when testing platform interface changes.
 # dependency_overrides:

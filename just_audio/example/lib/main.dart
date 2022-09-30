@@ -2,12 +2,15 @@
 // More advanced examples demonstrating other features can be found in the same
 // directory as this example in the GitHub repository.
 
+import 'dart:developer';
+
 import 'package:audio_session/audio_session.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_example/common.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 void main() => runApp(const MyApp());
 
@@ -43,9 +46,11 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
     });
     // Try to load audio from a source and catch any errors.
     try {
+      final yt = YoutubeExplode().videos.streamsClient;
+      final m = await yt.getManifest('ikebWCNAt0k');
       // AAC example: https://dl.espressif.com/dl/audio/ff-16b-2c-44100hz.aac
-      await _player.setAudioSource(AudioSource.uri(Uri.parse(
-          "https://s3.amazonaws.com/scifri-episodes/scifri20181123-episode.mp3")));
+      await _player.setAudioSource(AudioSource.uri(
+          m.audioOnly.firstWhere((element) => element.tag == 140).url));
     } catch (e) {
       print("Error loading audio source: $e");
     }
