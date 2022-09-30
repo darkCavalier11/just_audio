@@ -49,8 +49,9 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
       final yt = YoutubeExplode().videos.streamsClient;
       final m = await yt.getManifest('Hq7zpf-1wqw');
       // AAC example: https://dl.espressif.com/dl/audio/ff-16b-2c-44100hz.aac
-      await _player.setAudioSource(AudioSource.uri(
+      final duration = await _player.setAudioSource(AudioSource.uri(
           m.audioOnly.firstWhere((element) => element.tag == 140).url));
+      log(duration!.inSeconds.toString()); // should be double on iOS device than android
     } catch (e) {
       print("Error loading audio source: $e");
     }
